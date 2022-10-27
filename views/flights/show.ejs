@@ -9,7 +9,21 @@
   <div><%= flight.flightNo %></div>
   <div>Departure: </div>
   <div><%= flight.departs %></div>
-</section>
+  
+  <div>Please make sure Ticket is not in the following list:</div>
+  <section id="badge-container">
+      <% tickets.forEach(function(t) { %>
+          <article class="badge"><%= t.seat %></article>
+      <% }) %>
+  </section>
+
+  <form id="add-ticket" action="/flights/<%= flight._id %>/tickets" method="POST">
+      <label>Seat:</label>
+      <input type="string" name="seat" required pattern="[A-F][1-9]\d?">
+      <label>Price:</label>
+      <input type="number" name="price">
+      <input type="submit" value="Add Ticket">
+  </form>
 
 <br><br><h2>Destinations</h2>
 <form id="add-destination-form" method="POST" action="/flights/<%= flight._id %>/destinations">
@@ -22,17 +36,16 @@
         <option value="DFW">DFW</option>
         <option value="DEN">DEN</option>
         <option value="LAX">LAX</option>
-        <option value="LAX">SAN</option>
         <option value="SFO" selected>SFO</option>
     </select>
     <input type="submit" value="Add Destination">
 </form>
-
+  
 <% if (flight.destinations.length) { %>
-    <% flight.destinations.forEach(function(m) { %>
+    <% flight.destinations.forEach(function(d) { %>
         <tr>
-            <td><%= m.airport %></td>
-            <td><%= m.arrival %></td>
+            <td><%= d.airport %></td>
+            <td><%= d.arrival %></td>
         </tr>
         <% }); %>
     <tbody>
@@ -41,5 +54,21 @@
 <% } else { %>
   <h5>No Current Destination</h5>
 <% } %>
+
+<% if (tickets.length) { %>
+    <% tickets.forEach(function(t) { %>
+        <tr>
+            <td><%= t.seat %></td>
+            <td><%= t.price %></td>
+        </tr>
+        <% }); %>
+    <tbody>
+    </tbody>
+  </table>
+<% } else { %>
+  <h5>No Current Ticket</h5>
+<% } %>
+
+
 
 <%- include('../partials/footer') %>
