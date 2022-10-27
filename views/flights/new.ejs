@@ -4,14 +4,18 @@
 <form id="new-form" action="/flights" method="POST">
     <label>Airline:</label>
     <input type="text" name="airline">
+
     <label>Airport:</label>
     <input type="text" name="airport">
-    <label>Flight Number</label>
+
+    <label>Flight Number:</label>
     <input type="number" name="flightNo">
-    <label>Departs</label>
+
+    <label>Departs:</label>
     <input type="datetime-local" name="departs" value="<%= departsDate %>">
-    <input type="submit" value="Add Flight">
-  </form>
+
+    <button type="submit">Add Flight</button>
+</form>
 
 
 
